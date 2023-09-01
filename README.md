@@ -51,5 +51,6 @@ This web app, built with React, React Bootstrap, TypeScript, and CSS, empowers u
          - rest of the parts will follow the same pattern      
 
 Here's what the front end currently looks like :) 
-<img width="746" alt="image" src="https://github.com/saikot-paul/cv-generator/assets/79386282/cec8d115-6c12-4bcd-9df7-9f4537d0ee93">
+<img width="808" alt="image" src="https://github.com/saikot-paul/cv-generator/assets/79386282/4d65dd24-5dd5-4ad8-99be-83c52bbf67ac">
+
 
