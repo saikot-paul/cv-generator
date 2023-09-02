@@ -6,3 +6,8 @@
     gap: 0.5em;
     position: sticky;
 }
+.big-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}

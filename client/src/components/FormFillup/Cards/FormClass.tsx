@@ -64,7 +64,7 @@ class FormClass extends Component<Props, State> {
       <>
         <Container>
           <Row key={customKey} className="mb-1">
-            <Col md={10}>
+            <Col xs={10}>
               <Form.Control
                 type="text"
                 onChange={(e) => this.debounceHandleResp(e, customKey)}

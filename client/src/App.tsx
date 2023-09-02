@@ -1,5 +1,5 @@
 import Header from "./components/Header";
-import { Row, Col, Container, Card } from "react-bootstrap";
+import { Row, Col, Container, Card, Button } from "react-bootstrap";
 import { FormFillup } from "./components/FormFillup/FormFillup";
 import { ResumeRenderComp } from "./components/ResumeRender/ResumeRenderComp";
 import { FormData } from "./components/interface/interface";
@@ -37,8 +37,8 @@ const App = () => {
         <Row>
           <Header></Header>
         </Row>
-        <Row style={{ width: "80vw" }}>
-          <Col md={3}>
+        <Row className="mb-4">
+          <Col md={6}>
             <Row>
               <FormFillup
                 contactData={contactData}
@@ -54,10 +54,15 @@ const App = () => {
               ></FormFillup>
             </Row>
           </Col>
-          <Col md={5}>
-            <ResumeRenderComp></ResumeRenderComp>
+          <Col md={6}>
+            <ResumeRenderComp contactData={contactData}></ResumeRenderComp>
           </Col>
-          <Col>
+        </Row>
+        <Row id="suggestions">
+          <Col md={6}>
+            <ResumeRenderComp contactData={contactData}></ResumeRenderComp>
+          </Col>
+          <Col md={6}>
             <Card>
               <Card.Header>Suggestions</Card.Header>
               <Card.Body>
@@ -66,7 +71,14 @@ const App = () => {
                   delay={50}
                 ></Typewriter>
               </Card.Body>
+              <div
+                className="d-flex justify-content-end"
+                style={{ margin: "0.25rem" }}
+              >
+                <Button>Scroll top</Button>
+              </div>
             </Card>
+            <Row className="d-flex justify-content-end"></Row>
           </Col>
         </Row>
       </Container>

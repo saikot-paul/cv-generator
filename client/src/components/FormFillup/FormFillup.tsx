@@ -41,6 +41,14 @@ export const FormFillup = ({
 }: Props) => {
   const [text, setText] = useState("");
 
+  function scrollToGenerate() {
+    const section = document.getElementById("suggestions");
+
+    if (section) {
+      section.scrollIntoView({ behavior: "smooth" });
+    }
+  }
+
   async function handleSubmit(e: React.MouseEvent) {
     e.preventDefault();
     console.log("\n");
@@ -121,7 +129,10 @@ export const FormFillup = ({
             <Button
               type="submit"
               style={{ margin: "0.25rem" }}
-              onClick={(e) => debounceHandleSubmit(e)}
+              onClick={(e) => {
+                scrollToGenerate();
+                debounceHandleSubmit(e);
+              }}
             >
               Generate suggestions
             </Button>

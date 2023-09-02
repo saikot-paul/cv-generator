@@ -1,26 +1,40 @@
 import { Container, Row, Card } from "react-bootstrap";
 import "./resume.css";
-export const ResumeRenderComp = () => {
+import HeaderComp from "./HeaderComp";
+import { FormData, nestedItem } from "../interface/interface";
+import {} from "react";
 
-  const firstname = "Saikot ";
-  const lastname = "Paul";
+interface Props {
+  contactData: FormData;
+}
+export const ResumeRenderComp = ({ contactData }: Props) => {
+  function getParam(param: string) {
+    if (
+      contactData.value.length === 0 ||
+      contactData.value[0].value.length === 0
+    ) {
+      return null;
+    }
+
+    const item: nestedItem | undefined = contactData.value[0].value.find(
+      (item) => item.key === param
+    );
+
+    return item ? item.value : "";
+  }
+
   return (
     <Card>
       <Container>
         <Row>
           <Card.Header className="header">
-            <h2>{firstname + " " + lastname}</h2>
-            <div className="header-links">
-              <a className="link" target="_blank" href="www.google.ca">
-                Email |
-              </a>
-              <a className="link" target="_blank" href="www.google.ca">
-                LinkedIn |
-              </a>
-              <a className="link" target="_blank" href="www.google.ca">
-                Website
-              </a>
-            </div>
+            <HeaderComp
+              firstname={getParam("firstname")}
+              lastname={getParam("lastname")}
+              linkedIn={getParam("linkedin")}
+              email={getParam("email")}
+              website={getParam("website")}
+            ></HeaderComp>
           </Card.Header>
         </Row>
         <Row>
