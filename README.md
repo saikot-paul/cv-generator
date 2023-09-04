@@ -24,7 +24,8 @@ This web app, built with React, React Bootstrap, TypeScript, and CSS, empowers u
      - [x] on render, map out the useState correctly such that each comp is given the correct itemKey 
      - [x] in formClass make sure that if itemKey doesn't exist then to push the itemKey
      - [x] ensure that add/remove keys work properly 
-  - [x] create temporary boilerplate for resume render 
+  - ~~[x] create temporary boilerplate for resume render~~
+  - [ ] reformat resume render to fit react-pdf (good thing is that it automatically re-renders anytime there is a state change) 
   - [ ] find way to dynamically store user data
      - [x] propagate those changes into the main App.tsx
      - [ ] use the formData and render the resume
