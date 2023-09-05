@@ -1,5 +1,5 @@
 import Header from "./components/Header";
-import { Row, Col, Container, Card, Button } from "react-bootstrap";
+import { Row, Col, Container, Card } from "react-bootstrap";
 import { FormFillup } from "./components/FormFillup/FormFillup";
 import { ResumeRenderComp } from "./components/ResumeRender/ResumeRenderComp";
 import { FormData } from "./components/interface/interface";
@@ -55,30 +55,37 @@ const App = () => {
             </Row>
           </Col>
           <Col md={6}>
-            <ResumeRenderComp contactData={contactData}></ResumeRenderComp>
+            <ResumeRenderComp></ResumeRenderComp>
           </Col>
         </Row>
         <Row id="suggestions">
           <Col md={6}>
-            <ResumeRenderComp contactData={contactData}></ResumeRenderComp>
-          </Col>
-          <Col md={6}>
             <Card>
               <Card.Header>Suggestions</Card.Header>
               <Card.Body>
-                <Typewriter
-                  text={"Checking if this works, hopefully does so"}
-                  delay={50}
-                ></Typewriter>
+                <div>
+                  <Typewriter
+                    text={"Checking if this works, hopefully does so"}
+                    delay={50}
+                  ></Typewriter>
+                </div>
+                <div>
+                  <Typewriter
+                    text={"Checking if this works, hopefully does so"}
+                    delay={50}
+                  ></Typewriter>
+                </div>
+                <div>
+                  <Typewriter
+                    text={"Checking if this works, hopefully does so"}
+                    delay={50}
+                  ></Typewriter>
+                </div>
               </Card.Body>
-              <div
-                className="d-flex justify-content-end"
-                style={{ margin: "0.25rem" }}
-              >
-                <Button>Scroll top</Button>
-              </div>
             </Card>
-            <Row className="d-flex justify-content-end"></Row>
+          </Col>
+          <Col md={6}>
+            <ResumeRenderComp></ResumeRenderComp>
           </Col>
         </Row>
       </Container>

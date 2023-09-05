@@ -1,41 +1,39 @@
 import React from "react";
+import { FormData, nestedItem } from "../interface/interface";
 
 interface Props {
-  firstname?: string | null;
-  lastname?: string | null;
-  email?: string | null;
-  linkedIn?: string | null;
-  website?: string | null;
+  contactData: FormData;
 }
 
-const Header = ({
-  firstname = "John",
-  lastname = "Doe",
-  email,
-  linkedIn,
-  website,
-}: Props) => {
+const Header = ({ contactData }: Props) => {
   const links: { name: string; link: string }[] = [];
 
-  if (email === null || email === undefined) {
-    links.push({ name: "Email", link: "yourname@email.com" });
-  } else {
-    links.push({ name: "Email", link: email });
+  function getParam(param: string) {
+    if (
+      contactData.value.length === 0 ||
+      contactData.value[0].value.length === 0
+    ) {
+      return null;
+    }
+
+    const item: nestedItem | undefined = contactData.value[0].value.find(
+      (item) => item.key === param
+    );
+
+    return item ? item.value : "";
   }
 
-  if (linkedIn) {
-    links.push({
-      name: "LinkedIn",
-      link: linkedIn,
-    });
-  }
-  if (website) {
-    links.push({
-      name: "Website",
-      link: website,
-    });
-  }
+  const email = getParam("email");
+  const linkedin = getParam("linkedin");
+  const website = getParam("website");
+  const firstname = getParam("firstname");
+  const lastname = getParam("lastname");
 
+  console.log(email);
+  console.log(firstname);
+  console.log(website);
+  console.log(linkedin);
+  console.log(lastname);
   function getLinks() {
     if (links.length === 0) {
       return null;

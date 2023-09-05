@@ -12,7 +12,7 @@ import { FormData } from "../interface/interface";
 import { debounce } from "lodash";
 import axios from "axios";
 import { useState } from "react";
-import { Typewriter } from "./Typewriter";
+
 
 interface Props {
   contactData: FormData;
@@ -140,7 +140,6 @@ export const FormFillup = ({
               Download
             </Button>
           </div>
-          <Typewriter text={text} delay={30}></Typewriter>
         </Card>
       </Container>
     </>

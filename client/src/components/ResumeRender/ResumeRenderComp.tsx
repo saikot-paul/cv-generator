@@ -1,170 +1,202 @@
-import { Container, Row, Card } from "react-bootstrap";
-import "./resume.css";
-import HeaderComp from "./HeaderComp";
-import { FormData, nestedItem } from "../interface/interface";
-import {} from "react";
+import {
+  Document,
+  Page,
+  Text,
+  View,
+  StyleSheet,
+  PDFViewer,
+} from "@react-pdf/renderer";
 
-interface Props {
-  contactData: FormData;
-}
-export const ResumeRenderComp = ({ contactData }: Props) => {
-  function getParam(param: string) {
-    if (
-      contactData.value.length === 0 ||
-      contactData.value[0].value.length === 0
-    ) {
-      return null;
-    }
+const styles = StyleSheet.create({
+  card: {
+    width: "100%",
+    padding: 10,
+    marginBottom: 10,
+  },
+  header: {
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center",
+    marginBottom: 5,
+  },
+  headerText: {
+    fontSize: 25,
+    marginBottom: 4,
+  },
+  headerLinks: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+  },
+  link: {
+    fontSize: 10,
+    textDecoration: "underline",
+    color: "blue",
+  },
+  contentContainer: {
+    display: "flex",
+    flexDirection: "column",
+  },
+  sectionHeader: {
+    fontSize: 20,
+    borderBottomWidth: 1,
+    borderBottomColor: "black",
+    marginTop: 5,
+    marginBottom: 5,
+  },
+  spread: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    paddingLeft: 5,
+    paddingRight: 5,
+  },
+  top: {
+    fontSize: 12,
+    marginBottom: 3,
+  },
+  bottom: {
+    fontSize: 10,
+    marginBottom: 6,
+  },
+  experienceContainer: {
+    display: "flex",
+    flexDirection: "column",
+    paddingLeft: 3,
+    paddingRight: 3,
+  },
+  topExperience: {
+    marginTop: 4,
+    fontSize: 14,
+  },
+  topProject: {
+    marginTop: 8,
+    marginBottom: 4,
+    fontSize: 14,
+  },
+  bottomExperience: {
+    marginBottom: 4,
+    fontSize: 12,
+  },
+  ul: {
+    fontSize: 10,
+    paddingLeft: 10,
+    paddingRight: 10,
+    marginBottom: 10,
+  },
+});
 
-    const item: nestedItem | undefined = contactData.value[0].value.find(
-      (item) => item.key === param
-    );
+export const ResumeRenderComp = () => (
+  <PDFViewer style={{ width: "100%", height: "100vh" }}>
+    <Document title="resume.pdf">
+      <Page size="A4">
+        <View style={styles.card}>
+          <View style={styles.header}>
+            <Text style={styles.headerText}>John Doe</Text>
+            <View style={styles.headerLinks}>
+              <Text style={styles.link}>Email |</Text>
+              <Text style={styles.link}>Website |</Text>
+              <Text style={styles.link}>LinkedIn</Text>
+            </View>
+          </View>
+          <View style={styles.contentContainer}>
+            <View style={styles.sectionHeader}>
+              <Text>Education</Text>
+            </View>
+            <View style={styles.spread}>
+              <Text style={styles.top}>University of Nowhere</Text>
+              <Text style={styles.top}>Date Start - Date End</Text>
+            </View>
+            <View style={styles.spread}>
+              <Text style={styles.top}>Bachelor's of Doing Nothing</Text>
+              <Text style={styles.top}>City, State</Text>
+            </View>
+            <View style={styles.sectionHeader}>
+              <Text>Experience</Text>
+            </View>
+            <View style={styles.experienceContainer}>
+              <View style={styles.spread}>
+                <Text style={styles.topExperience}>Position Title</Text>
+                <Text style={styles.topExperience}>Start Date - End Date</Text>
+              </View>
+              <View style={styles.spread}>
+                <Text style={styles.bottomExperience}>Company Name</Text>
+                <Text style={styles.bottomExperience}>City, State</Text>
+              </View>
+              <View>
+                <View style={styles.ul}>
+                  <Text>
+                    - Lorem ipsum dolor sit, amet consectetur adipisicing elit.
+                    Distinctio, perferendis quis. Omnis, autem!
+                  </Text>
+                  <Text>
+                    - Lorem ipsum dolor sit, amet consectetur adipisicing elit.
+                    Distinctio, perferendis quis. Omnis, autem!
+                  </Text>
+                  <Text>
+                    - Lorem ipsum dolor sit, amet consectetur adipisicing elit.
+                    Distinctio, perferendis quis. Omnis, autem!
+                  </Text>
+                </View>
+              </View>
+            </View>
+            <View style={styles.experienceContainer}>
+              <View style={styles.spread}>
+                <Text style={styles.topExperience}>Position Title</Text>
+                <Text style={styles.topExperience}>Start Date - End Date</Text>
+              </View>
+              <View style={styles.spread}>
+                <Text style={styles.bottomExperience}>Company Name</Text>
+                <Text style={styles.bottomExperience}>City, State</Text>
+              </View>
+              <View>
+                <View style={styles.ul}>
+                  <Text>
+                    - Lorem ipsum dolor sit, amet consectetur adipisicing elit.
+                    Distinctio, perferendis quis. Omnis, autem!
+                  </Text>
+                  <Text>
+                    - Lorem ipsum dolor sit, amet consectetur adipisicing elit.
+                    Distinctio, perferendis quis. Omnis, autem!
+                  </Text>
+                  <Text>
+                    - Lorem ipsum dolor sit, amet consectetur adipisicing elit.
+                    Distinctio, perferendis quis. Omnis, autem!
+                  </Text>
+                </View>
+              </View>
+            </View>
+            <View style={styles.sectionHeader}>
+              <Text>Projects</Text>
+            </View>
+            <View style={styles.experienceContainer}>
+              <View style={styles.spread}>
+                <Text style={styles.topProject}>Position Title</Text>
+                <Text style={styles.topProject}>Start Date - End Date</Text>
+              </View>
 
-    return item ? item.value : "";
-  }
-
-  return (
-    <Card>
-      <Container>
-        <Row>
-          <Card.Header className="header">
-            <HeaderComp
-              firstname={getParam("firstname")}
-              lastname={getParam("lastname")}
-              linkedIn={getParam("linkedin")}
-              email={getParam("email")}
-              website={getParam("website")}
-            ></HeaderComp>
-          </Card.Header>
-        </Row>
-        <Row>
-          <div className="content-container">
-            <Row>
-              <h3>Education</h3>
-            </Row>
-            <Row>
-              <div className="spread top">
-                <div>University of Nowhere</div>
-                <div>Date Start - Date End</div>
-              </div>
-              <div className="spread bottom">
-                <div>
-                  <em>Bachelor's of Doing Nothing</em>
-                </div>
-                <div>City, State</div>
-              </div>
-            </Row>
-            <Row>
-              <h3>Experience</h3>
-            </Row>
-            <Row>
-              <div className="spread top">
-                <div>Position Title</div>
-                <div>Start Date - End Date</div>
-              </div>
-              <div className="spread bottom">
-                <div>
-                  <em>Company Name</em>
-                </div>
-                <div>City, State</div>
-              </div>
-            </Row>
-            <Row>
-              <ul>
-                <li>
-                  Lorem ipsum dolor sit, amet consectetur adipisicing elit.
-                  Distinctio, perferendis quis. Omnis, autem!
-                </li>
-                <li>
-                  Lorem ipsum dolor sit, amet consectetur adipisicing elit.
-                  Distinctio, perferendis quis. Omnis, autem!
-                </li>
-                <li>
-                  Lorem ipsum dolor sit, amet consectetur adipisicing elit.
-                  Distinctio, perferendis quis. Omnis, autem!
-                </li>
-              </ul>
-            </Row>
-            <Row>
-              <div className="spread top">
-                <div>Position Title</div>
-                <div>Start Date - End Date</div>
-              </div>
-              <div className="spread bottom">
-                <div>
-                  <em>Company Name</em>
-                </div>
-                <div>City, State</div>
-              </div>
-            </Row>
-            <Row>
-              <ul>
-                <li>
-                  Lorem ipsum dolor sit, amet consectetur adipisicing elit.
-                  Distinctio, perferendis quis. Omnis, autem!
-                </li>
-                <li>
-                  Lorem ipsum dolor sit, amet consectetur adipisicing elit.
-                  Distinctio, perferendis quis. Omnis, autem!
-                </li>
-                <li>
-                  Lorem ipsum dolor sit, amet consectetur adipisicing elit.
-                  Distinctio, perferendis quis. Omnis, autem!
-                </li>
-              </ul>
-            </Row>
-            <Row>
-              <h3>Projects</h3>
-            </Row>
-            <Row>
-              <div className="spread top">
-                <div>Project Name</div>
-                <div>Start Date - End Date</div>
-              </div>
-            </Row>
-            <Row>
-              <ul>
-                <li>
-                  Lorem ipsum dolor sit, amet consectetur adipisicing elit.
-                  Distinctio, perferendis quis. Omnis, autem!
-                </li>
-                <li>
-                  Lorem ipsum dolor sit, amet consectetur adipisicing elit.
-                  Distinctio, perferendis quis. Omnis, autem!
-                </li>
-                <li>
-                  Lorem ipsum dolor sit, amet consectetur adipisicing elit.
-                  Distinctio, perferendis quis. Omnis, autem!
-                </li>
-              </ul>
-            </Row>
-            <Row>
-              <div className="spread top">
-                <div>Project Name</div>
-                <div>Start Date - End Date</div>
-              </div>
-            </Row>
-            <Row>
-              <ul>
-                <li>
-                  Lorem ipsum dolor sit, amet consectetur adipisicing elit.
-                  Distinctio, perferendis quis. Omnis, autem!
-                </li>
-                <li>
-                  Lorem ipsum dolor sit, amet consectetur adipisicing elit.
-                  Distinctio, perferendis quis. Omnis, autem!
-                </li>
-                <li>
-                  Lorem ipsum dolor sit, amet consectetur adipisicing elit.
-                  Distinctio, perferendis quis. Omnis, autem!
-                </li>
-              </ul>
-            </Row>
-          </div>
-        </Row>
-      </Container>
-    </Card>
-  );
-};
+              <View>
+                <View style={styles.ul}>
+                  <Text>
+                    - Lorem ipsum dolor sit, amet consectetur adipisicing elit.
+                    Distinctio, perferendis quis. Omnis, autem!
+                  </Text>
+                  <Text>
+                    - Lorem ipsum dolor sit, amet consectetur adipisicing elit.
+                    Distinctio, perferendis quis. Omnis, autem!
+                  </Text>
+                  <Text>
+                    - Lorem ipsum dolor sit, amet consectetur adipisicing elit.
+                    Distinctio, perferendis quis. Omnis, autem!
+                  </Text>
+                </View>
+              </View>
+            </View>
+          </View>
+        </View>
+      </Page>
+    </Document>
+  </PDFViewer>
+);
 
 export default ResumeRenderComp;
