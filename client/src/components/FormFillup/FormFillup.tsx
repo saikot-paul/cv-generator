@@ -11,8 +11,6 @@ import "bootstrap/dist/css/bootstrap.css";
 import { FormData } from "../interface/interface";
 import { debounce } from "lodash";
 import axios from "axios";
-import { useState } from "react";
-
 
 interface Props {
   contactData: FormData;
@@ -20,11 +18,13 @@ interface Props {
   educationData: FormData;
   experienceData: FormData;
   projectData: FormData;
+  text: string;
   setContact: React.Dispatch<React.SetStateAction<FormData>>;
   setDesiredPosition: React.Dispatch<React.SetStateAction<FormData>>;
   setEducation: React.Dispatch<React.SetStateAction<FormData>>;
   setExperience: React.Dispatch<React.SetStateAction<FormData>>;
   setProject: React.Dispatch<React.SetStateAction<FormData>>;
+  setText: React.Dispatch<React.SetStateAction<string>>;
 }
 
 export const FormFillup = ({
@@ -33,14 +33,14 @@ export const FormFillup = ({
   educationData,
   experienceData,
   projectData,
+  text,
   setContact,
   setDesiredPosition,
   setEducation,
   setExperience,
   setProject,
+  setText,
 }: Props) => {
-  const [text, setText] = useState("");
-
   function scrollToGenerate() {
     const section = document.getElementById("suggestions");
 
