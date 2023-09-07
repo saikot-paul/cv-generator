@@ -1,11 +1,9 @@
 import Header from "./components/Header";
-import { Row, Col, Container, Card, Accordion } from "react-bootstrap";
-import { FormFillup } from "./components/FormFillup/FormFillup";
+import { Row, Col, Container } from "react-bootstrap";
+import FormFillup from "./components/FormFillup/FormFillup";
 import { ResumeRenderComp } from "./components/ResumeRender/ResumeRenderComp";
 import { FormData } from "./components/interface/interface";
 import { useState } from "react";
-import { Typewriter } from "./components/FormFillup/Typewriter";
-import AccordionComp from "./components/FormFillup/Accordion/AccordionComp";
 
 const App = () => {
   const [contactData, setContact] = useState<FormData>({
@@ -30,32 +28,6 @@ const App = () => {
     value: [],
   });
 
-  const [text, setText] = useState<string>("");
-
-  let responseContainer;
-  const writeResponse = (
-    <Card>
-      <Card.Body id="suggestion-card">
-        <Typewriter text={text} delay={20}></Typewriter>
-      </Card.Body>
-    </Card>
-  );
-  if (text !== "") {
-    responseContainer = (
-      <Card style={{ border: "none" }}>
-        <Accordion alwaysOpen defaultActiveKey={"5"}>
-          <AccordionComp
-            title="Suggestions"
-            eventKey="5"
-            children={writeResponse}
-          ></AccordionComp>
-        </Accordion>
-      </Card>
-    );
-  } else {
-    responseContainer = null;
-  }
-
   return (
     <>
       <Container
@@ -78,8 +50,6 @@ const App = () => {
                 setExperience={setExperience}
                 projectData={projectData}
                 setProject={setProject}
-                text={text}
-                setText={setText}
               ></FormFillup>
             </Row>
           </Col>
@@ -87,7 +57,6 @@ const App = () => {
             <ResumeRenderComp></ResumeRenderComp>
           </Col>
         </Row>
-        <Row id="suggestions">{responseContainer}</Row>
       </Container>
     </>
   );

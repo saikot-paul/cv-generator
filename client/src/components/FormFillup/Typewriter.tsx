@@ -6,8 +6,14 @@ interface Props {
 }
 
 export const Typewriter = ({ text, delay }: Props) => {
+
   const [currentText, setCurrent] = useState("");
   const [currentIndex, setCurrentIndex] = useState(0);
+
+  useEffect(() => {
+    setCurrent("");
+    setCurrentIndex(0);
+  }, [text, delay]);
 
   useEffect(() => {
     if (currentIndex < text.length) {
@@ -19,6 +25,7 @@ export const Typewriter = ({ text, delay }: Props) => {
       return () => clearTimeout(timeout);
     }
   }, [currentIndex, delay, text]);
+
 
   return <span>{currentText}</span>;
 };

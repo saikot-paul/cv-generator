@@ -1,3 +1,4 @@
+import React, { Component } from "react";
 import {
   AccordionComp,
   Contact,
@@ -11,6 +12,7 @@ import "bootstrap/dist/css/bootstrap.css";
 import { FormData } from "../interface/interface";
 import { debounce } from "lodash";
 import axios from "axios";
+import { Typewriter } from "./Typewriter";
 
 interface Props {
   contactData: FormData;
@@ -18,59 +20,84 @@ interface Props {
   educationData: FormData;
   experienceData: FormData;
   projectData: FormData;
-  text: string;
   setContact: React.Dispatch<React.SetStateAction<FormData>>;
   setDesiredPosition: React.Dispatch<React.SetStateAction<FormData>>;
   setEducation: React.Dispatch<React.SetStateAction<FormData>>;
   setExperience: React.Dispatch<React.SetStateAction<FormData>>;
   setProject: React.Dispatch<React.SetStateAction<FormData>>;
-  setText: React.Dispatch<React.SetStateAction<string>>;
 }
 
-export const FormFillup = ({
-  contactData,
-  desiredPosition,
-  educationData,
-  experienceData,
-  projectData,
-  text,
-  setContact,
-  setDesiredPosition,
-  setEducation,
-  setExperience,
-  setProject,
-  setText,
-}: Props) => {
-  function scrollToGenerate() {
-    const section = document.getElementById("suggestions");
+interface State {
+  text: string;
+}
 
-    if (section) {
-      section.scrollIntoView({ behavior: "smooth" });
-    }
+class FormFillup extends Component<Props, State> {
+  debounceHandleSubmit: (e: React.MouseEvent) => void;
+  constructor(props: Props) {
+    super(props);
+
+    this.state = {
+      text: "",
+    };
+
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.debounceHandleSubmit = debounce(this.handleSubmit, 3000);
   }
 
-  async function handleSubmit(e: React.MouseEvent) {
+  componentDidMount() {
+    this.setState({
+      text: "Click on Generate Suggestions to get suggestions on your resume.",
+    });
+  }
+
+  setText(newText: string) {
+    this.setState({ text: newText });
+  }
+
+  async handleSubmit(e: React.MouseEvent) {
     e.preventDefault();
     console.log("\n");
+
     try {
-      await axios.get("http://localhost:3000/generate").then((response) => {
-        console.log(response);
-        const data = response.data;
-        console.log(data);
-        const newText = data.generations[0].text;
-        setText(newText);
-        console.log(text);
-      });
+      const response = await axios.get("http://localhost:3000/generate");
+      console.log(response);
+      const data = response.data;
+      console.log(data);
+      const newText = data.generations[0].text;
+      this.setState({ text: newText }, () => console.log(this.state.text));
+      console.log(this.state.text);
     } catch (error) {
       console.log(error);
+      this.setState({
+        text: "Unable to get suggestions, please try again after some time. Thank you :).",
+      });
     }
     console.log("done");
   }
 
-  const debounceHandleSubmit = debounce(handleSubmit, 3000);
+  render() {
+    const {
+      contactData,
+      desiredPosition,
+      educationData,
+      experienceData,
+      projectData,
+      setContact,
+      setDesiredPosition,
+      setEducation,
+      setExperience,
+      setProject,
+    } = this.props;
 
-  return (
-    <>
+    const writeComponent = (
+      <Card>
+        <Card.Body>
+          <Typewriter text={this.state.text} delay={20}></Typewriter>
+        </Card.Body>
+      </Card>
+    );
+
+    return (
       <Container style={{ border: "none" }}>
         <Card>
           <Accordion alwaysOpen defaultActiveKey={"0"}>
@@ -124,14 +151,18 @@ export const FormFillup = ({
               eventKey={"4"}
               title={"Projects"}
             ></AccordionComp>
+            <AccordionComp
+              children={writeComponent}
+              eventKey="5"
+              title="Suggestions"
+            ></AccordionComp>
           </Accordion>
           <div className="d-flex justify-content-end">
             <Button
               type="submit"
               style={{ margin: "0.25rem" }}
               onClick={(e) => {
-                scrollToGenerate();
-                debounceHandleSubmit(e);
+                this.debounceHandleSubmit(e);
               }}
             >
               Generate suggestions
@@ -142,6 +173,8 @@ export const FormFillup = ({
           </div>
         </Card>
       </Container>
-    </>
-  );
-};
+    );
+  }
+}
+
+export default FormFillup;
