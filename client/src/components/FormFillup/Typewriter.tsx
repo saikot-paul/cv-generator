@@ -13,7 +13,7 @@ export const Typewriter = ({ text, delay }: Props) => {
   useEffect(() => {
     setCurrent("");
     setCurrentIndex(0);
-  }, [text, delay]);
+  }, [text]);
 
   useEffect(() => {
     if (currentIndex < text.length) {

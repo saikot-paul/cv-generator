@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { useState } from "react";
 import {
   AccordionComp,
   Contact,
@@ -14,7 +14,7 @@ import { debounce } from "lodash";
 import axios from "axios";
 import { Typewriter } from "./Typewriter";
 
-interface Props {
+type Props = {
   contactData: FormData;
   desiredPosition: FormData;
   educationData: FormData;
@@ -25,156 +25,142 @@ interface Props {
   setEducation: React.Dispatch<React.SetStateAction<FormData>>;
   setExperience: React.Dispatch<React.SetStateAction<FormData>>;
   setProject: React.Dispatch<React.SetStateAction<FormData>>;
-}
+};
 
-interface State {
-  text: string;
-}
+export const FormFillup: React.FC<Props> = (props) => {
+  const [text, setText] = useState<string>(
+    "Click on Generate Suggestions to get suggestions on your resume."
+  );
 
-class FormFillup extends Component<Props, State> {
-  debounceHandleSubmit: (e: React.MouseEvent) => void;
-  constructor(props: Props) {
-    super(props);
-
-    this.state = {
-      text: "",
-    };
-
-    this.handleSubmit = this.handleSubmit.bind(this);
-    this.debounceHandleSubmit = debounce(this.handleSubmit, 3000);
-  }
-
-  componentDidMount() {
-    this.setState({
-      text: "Click on Generate Suggestions to get suggestions on your resume.",
-    });
-  }
-
-  setText(newText: string) {
-    this.setState({ text: newText });
-  }
-
-  async handleSubmit(e: React.MouseEvent) {
+  const debounceHandleSubmit = debounce(async (e: React.MouseEvent) => {
     e.preventDefault();
     console.log("\n");
 
     try {
       const response = await axios.get("http://localhost:3000/generate");
-      console.log(response);
       const data = response.data;
-      console.log(data);
       const newText = data.generations[0].text;
-      this.setState({ text: newText }, () => console.log(this.state.text));
-      console.log(this.state.text);
+      setText(newText);
     } catch (error) {
       console.log(error);
-      this.setState({
-        text: "Unable to get suggestions, please try again after some time. Thank you :).",
-      });
+      setText(
+        "Unable to get suggestions, please try again after some time. Thank you :)."
+      );
     }
     console.log("done");
-  }
+  }, 3000);
 
-  render() {
-    const {
-      contactData,
-      desiredPosition,
-      educationData,
-      experienceData,
-      projectData,
-      setContact,
-      setDesiredPosition,
-      setEducation,
-      setExperience,
-      setProject,
-    } = this.props;
+  const getResponsibility = () => {
+    const obj = { ...props.experienceData };
+    const value = obj.value;
 
-    const writeComponent = (
+    if (value) {
+      return;
+    }
+  };
+
+  const {
+    contactData,
+    desiredPosition,
+    educationData,
+    experienceData,
+    projectData,
+    setContact,
+    setDesiredPosition,
+    setEducation,
+    setExperience,
+    setProject,
+  } = props;
+
+  const writeComponent = (
+    <Card>
+      <Card.Body>
+        <Typewriter text={text} delay={20}></Typewriter>
+      </Card.Body>
+    </Card>
+  );
+
+  return (
+    <Container style={{ border: "none" }}>
       <Card>
-        <Card.Body>
-          <Typewriter text={this.state.text} delay={20}></Typewriter>
-        </Card.Body>
+        <Accordion alwaysOpen defaultActiveKey={"0"}>
+          <AccordionComp
+            children={
+              <DesiredPostion
+                formData={desiredPosition}
+                setFormData={setDesiredPosition}
+              ></DesiredPostion>
+            }
+            eventKey="0"
+            title={"Customize your resume for a specific job"}
+          ></AccordionComp>
+          <AccordionComp
+            children={
+              <Contact
+                formData={contactData}
+                setFormData={setContact}
+              ></Contact>
+            }
+            eventKey={"1"}
+            title={"Contact"}
+          ></AccordionComp>
+          <AccordionComp
+            children={
+              <Education
+                formData={educationData}
+                setFormData={setEducation}
+              ></Education>
+            }
+            eventKey={"2"}
+            title={"Education"}
+          ></AccordionComp>
+          <AccordionComp
+            children={
+              <Experience
+                formData={experienceData}
+                setFormData={setExperience}
+              ></Experience>
+            }
+            eventKey={"3"}
+            title={"Experience"}
+          ></AccordionComp>
+          <AccordionComp
+            children={
+              <Projects
+                formData={projectData}
+                setFormData={setProject}
+              ></Projects>
+            }
+            eventKey={"4"}
+            title={"Projects"}
+          ></AccordionComp>
+          <AccordionComp
+            children={writeComponent}
+            eventKey="5"
+            title="Suggestions"
+          ></AccordionComp>
+        </Accordion>
+        <div className="d-flex justify-content-end">
+          <Button
+            type="submit"
+            style={{ margin: "0.25rem" }}
+            onClick={(e) => {
+              debounceHandleSubmit(e);
+            }}
+          >
+            Generate suggestions
+          </Button>
+          <Button
+            type="button"
+            style={{ margin: "0.25rem" }}
+            onClick={getResponsibility}
+          >
+            Download
+          </Button>
+        </div>
       </Card>
-    );
-
-    return (
-      <Container style={{ border: "none" }}>
-        <Card>
-          <Accordion alwaysOpen defaultActiveKey={"0"}>
-            <AccordionComp
-              children={
-                <DesiredPostion
-                  formData={desiredPosition}
-                  setFormData={setDesiredPosition}
-                ></DesiredPostion>
-              }
-              eventKey="0"
-              title={"Customize your resume for a specific job"}
-            ></AccordionComp>
-            <AccordionComp
-              children={
-                <Contact
-                  formData={contactData}
-                  setFormData={setContact}
-                ></Contact>
-              }
-              eventKey={"1"}
-              title={"Contact"}
-            ></AccordionComp>
-            <AccordionComp
-              children={
-                <Education
-                  formData={educationData}
-                  setFormData={setEducation}
-                ></Education>
-              }
-              eventKey={"2"}
-              title={"Education"}
-            ></AccordionComp>
-            <AccordionComp
-              children={
-                <Experience
-                  formData={experienceData}
-                  setFormData={setExperience}
-                ></Experience>
-              }
-              eventKey={"3"}
-              title={"Experience"}
-            ></AccordionComp>
-            <AccordionComp
-              children={
-                <Projects
-                  formData={projectData}
-                  setFormData={setProject}
-                ></Projects>
-              }
-              eventKey={"4"}
-              title={"Projects"}
-            ></AccordionComp>
-            <AccordionComp
-              children={writeComponent}
-              eventKey="5"
-              title="Suggestions"
-            ></AccordionComp>
-          </Accordion>
-          <div className="d-flex justify-content-end">
-            <Button
-              type="submit"
-              style={{ margin: "0.25rem" }}
-              onClick={(e) => {
-                this.debounceHandleSubmit(e);
-              }}
-            >
-              Generate suggestions
-            </Button>
-            <Button type="button" style={{ margin: "0.25rem" }}>
-              Download
-            </Button>
-          </div>
-        </Card>
-      </Container>
-    );
-  }
-}
+    </Container>
+  );
+};
 
 export default FormFillup;

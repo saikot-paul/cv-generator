@@ -1,6 +1,6 @@
 import Header from "./components/Header";
 import { Row, Col, Container } from "react-bootstrap";
-import FormFillup from "./components/FormFillup/FormFillup";
+import { FormFillup } from "./components/FormFillup/FormFillup";
 import { ResumeRenderComp } from "./components/ResumeRender/ResumeRenderComp";
 import { FormData } from "./components/interface/interface";
 import { useState } from "react";
