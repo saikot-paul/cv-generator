@@ -54,9 +54,25 @@ export const FormFillup: React.FC<Props> = (props) => {
     const obj = { ...props.experienceData };
     const value = obj.value;
 
-    if (value) {
-      return;
+    if (value.length === 0) {
+      console.log("value.length === 0");
+      return null;
     }
+
+    if (value[0].value.length === 0) {
+      console.log("value[0].value.length === 0");
+      return null;
+    }
+
+    const respValues = [];
+    value.forEach((element) => {
+      respValues.push(
+        element.value.find((element) => element.key === "respList")
+      );
+    });
+
+    console.log(respValues);
+    
   };
 
   const {
