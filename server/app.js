@@ -13,6 +13,13 @@ app.use(morgan('tiny'))
 app.use(cors())
 
 app.get('/generate', async (req, res) => {
+
+  const experienceArray = req.query.experienceArray || []
+  const exp = experienceArray.map( (element) => `- ${element}`).join('\n')
+  const primer = 'Transform each bullet point in the experience section wrapped in """ """" below to fit the STAR (Situation, Task, Action, Result) format. Each transformed bullet point should be a full complete sentence embodying the essence of the STAR format. Each revised bullet point needs to start with an action word. Return only the revised version.'
+  const prompt = `${primer} \n\n"""\n\n${exp}\n\n"""`
+  
+  console.log(prompt)
   try {
     const options = {
       method: 'POST',
@@ -23,13 +30,13 @@ app.get('/generate', async (req, res) => {
         authorization: config.token,  
       }, 
       data:  { 
-        max_tokens: 1200,
-        model : 'command-light', 
-        end_sequences : ['stop'], 
-        temperature : 3.5, 
-        p : 0.75, 
-        num_generations : 1, 
-        prompt: 'Please explain to me how LLMs work'
+        model: 'command-light',
+        prompt: prompt, 
+        max_tokens: 600,
+        temperature: 0.3,
+        k: 135,
+        stop_sequences: ["\n"],
+        return_likelihoods: 'NONE'
       }
     };
 

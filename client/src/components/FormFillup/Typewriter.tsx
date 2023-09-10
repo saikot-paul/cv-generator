@@ -6,7 +6,6 @@ interface Props {
 }
 
 export const Typewriter = ({ text, delay }: Props) => {
-
   const [currentText, setCurrent] = useState("");
   const [currentIndex, setCurrentIndex] = useState(0);
 
@@ -18,14 +17,17 @@ export const Typewriter = ({ text, delay }: Props) => {
   useEffect(() => {
     if (currentIndex < text.length) {
       const timeout = setTimeout(() => {
-        setCurrent((prevText) => prevText + text[currentIndex]);
+        if (text[currentIndex] === "\n") {
+          setCurrent((prevText) => prevText + "\n");
+        } else {
+          setCurrent((prevText) => prevText + text[currentIndex]);
+        }
         setCurrentIndex((prev) => prev + 1);
       }, delay);
 
       return () => clearTimeout(timeout);
     }
   }, [currentIndex, delay, text]);
-
 
   return <span>{currentText}</span>;
 };

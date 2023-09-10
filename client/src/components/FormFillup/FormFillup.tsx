@@ -32,25 +32,39 @@ export const FormFillup: React.FC<Props> = (props) => {
     "Click on Generate Suggestions to get suggestions on your resume."
   );
 
+
   const debounceHandleSubmit = debounce(async (e: React.MouseEvent) => {
     e.preventDefault();
-    console.log("\n");
+
+    const reqParams = getResponsibility();
+    const baseUrl = "http://localhost:3000";
+
+    if (
+      reqParams === null ||
+      reqParams === undefined ||
+      reqParams[0].length == 0
+    ) {
+      setText("Enter some experiences please.");
+      return;
+    }
 
     try {
-      const response = await axios.get("http://localhost:3000/generate");
+      const response = await axios.get(`${baseUrl}/generate`, {
+        params: { experienceArray: reqParams[0] },
+      });
       const data = response.data;
-      const newText = data.generations[0].text;
-      setText(newText);
+      console.log(data);
+      const responseText: string = data.generations[0].text;
+      console.log(responseText);
     } catch (error) {
       console.log(error);
       setText(
         "Unable to get suggestions, please try again after some time. Thank you :)."
       );
     }
-    console.log("done");
   }, 3000);
 
-  const getResponsibility = () => {
+  const getResponsibility: () => string[][] | null = () => {
     const obj = { ...props.experienceData };
     const value = obj.value;
 
@@ -64,15 +78,28 @@ export const FormFillup: React.FC<Props> = (props) => {
       return null;
     }
 
-    const respValues = [];
-    value.forEach((element) => {
-      respValues.push(
-        element.value.find((element) => element.key === "respList")
-      );
+    const respValues = value.map((element) => {
+      return element.value
+        .filter((element) => {
+          return element.key === "respList";
+        })
+        .map((element) => {
+          if (element.list) {
+            return element.list;
+          }
+        });
     });
 
-    console.log(respValues);
-    
+    const reqParam: string[][] = [];
+    respValues.forEach((element) => {
+      element.forEach((element) => {
+        if (element) {
+          reqParam.push(element.map((item) => item.value));
+        }
+      });
+    });
+
+    return reqParam;
   };
 
   const {
