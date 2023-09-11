@@ -28,45 +28,89 @@ type Props = {
 };
 
 export const FormFillup: React.FC<Props> = (props) => {
-  const [text, setText] = useState<string>(
-    "Click on Generate Suggestions to get suggestions on your resume."
-  );
-
+  const [text, setText] = useState<string[]>([
+    "Click on Generate Suggestions to get suggestions on your resume.",
+  ]);
+  const baseUrl = "http://localhost:3000";
 
   const debounceHandleSubmit = debounce(async (e: React.MouseEvent) => {
     e.preventDefault();
 
     const reqParams = getResponsibility();
-    const baseUrl = "http://localhost:3000";
+    setText([
+      "Loading....................................................................................................",
+    ]);
 
     if (
       reqParams === null ||
       reqParams === undefined ||
-      reqParams[0].length == 0
+      reqParams[0][0] == ""
     ) {
-      setText("Enter some experiences please.");
+      setText(["Enter some experiences please."]);
       return;
     }
 
     try {
       const response = await axios.get(`${baseUrl}/generate`, {
-        params: { experienceArray: reqParams[0] },
+        params: {
+          experienceArray: reqParams[0],
+        },
       });
       const data = response.data;
       console.log(data);
       const responseText: string = data.generations[0].text;
       console.log(responseText);
+      setText([responseText]);
     } catch (error) {
       console.log(error);
-      setText(
-        "Unable to get suggestions, please try again after some time. Thank you :)."
-      );
+      setText([
+        "Unable to get suggestions, please try again after some time. Thank you :).",
+      ]);
     }
   }, 3000);
+
+  const debounceHandleSubmitMuliple = debounce(async (e: React.MouseEvent) => {
+    e.preventDefault();
+
+    const reqParams = getResponsibility();
+    setText([
+      "Loading....................................................................................................",
+    ]);
+
+    if (
+      reqParams === null ||
+      reqParams === undefined ||
+      reqParams[0][0] == ""
+    ) {
+      setText(["Enter some experiences please."]);
+      return;
+    }
+
+    const requests = reqParams.map(async (experience: string[]) => {
+      try {
+        const response = await axios.get(`${baseUrl}/generate`, {
+          params: {
+            experienceArray: experience,
+          },
+        });
+
+        return response.data.generations[0].text;
+      } catch (error) {
+        console.log(error);
+        return "Unable to get suggestions, please try again later. Thank you :)";
+      }
+    });
+
+    Promise.all(requests).then((suggestions) => {
+      setText(suggestions);
+    });
+  });
 
   const getResponsibility: () => string[][] | null = () => {
     const obj = { ...props.experienceData };
     const value = obj.value;
+
+    console.log(value);
 
     if (value.length === 0) {
       console.log("value.length === 0");
@@ -180,7 +224,7 @@ export const FormFillup: React.FC<Props> = (props) => {
           <AccordionComp
             children={writeComponent}
             eventKey="5"
-            title="Suggestions"
+            title="AI suggestions powered by Cohere"
           ></AccordionComp>
         </Accordion>
         <div className="d-flex justify-content-end">
@@ -196,7 +240,7 @@ export const FormFillup: React.FC<Props> = (props) => {
           <Button
             type="button"
             style={{ margin: "0.25rem" }}
-            onClick={getResponsibility}
+            onClick={(e) => debounceHandleSubmitMuliple(e)}
           >
             Download
           </Button>

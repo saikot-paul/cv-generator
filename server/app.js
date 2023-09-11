@@ -15,11 +15,11 @@ app.use(cors())
 app.get('/generate', async (req, res) => {
 
   const experienceArray = req.query.experienceArray || []
+  const desiredPostion = req.query.desiredPostion
   const exp = experienceArray.map( (element) => `- ${element}`).join('\n')
-  const primer = 'Transform each bullet point in the experience section wrapped in """ """" below to fit the STAR (Situation, Task, Action, Result) format. Each transformed bullet point should be a full complete sentence embodying the essence of the STAR format. Each revised bullet point needs to start with an action word. Return only the revised version.'
+  const primer = 'Transform each bullet point in the experience section wrapped in """ """" below to fit the STAR (Situation, Task, Action, Result) format. Each transformed bullet point should be a full complete sentence embodying the essence of the STAR format. There should be as many bullet points in the revised as the original experience. Return only the revised version.'
   const prompt = `${primer} \n\n"""\n\n${exp}\n\n"""`
   
-  console.log(prompt)
   try {
     const options = {
       method: 'POST',
@@ -32,15 +32,16 @@ app.get('/generate', async (req, res) => {
       data:  { 
         model: 'command-light',
         prompt: prompt, 
-        max_tokens: 600,
+        max_tokens: 900,
         temperature: 0.3,
-        k: 135,
+        k: 250, 
         stop_sequences: ["\n"],
         return_likelihoods: 'NONE'
       }
     };
 
     const response = await axios.request(options);
+    console.log(response.data)
     res.send(response.data); 
     
   } catch (error) {
