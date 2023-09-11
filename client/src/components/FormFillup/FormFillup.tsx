@@ -69,7 +69,7 @@ export const FormFillup: React.FC<Props> = (props) => {
       console.log(suggestions);
       setText(suggestions);
     });
-  }, 2500);
+  }, 2150);
 
   const getResponsibility: () => string[][] | null = () => {
     const obj = { ...props.experienceData };
