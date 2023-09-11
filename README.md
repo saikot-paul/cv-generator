@@ -35,6 +35,9 @@ This web app, built with React, React Bootstrap, TypeScript, and CSS, empowers u
      - [x] receive the results
      - [x] format it
      - [x] render it
+ - ~~[x] fix button issue:~~
+     - whenever pressed too many times the card body component glitches and text doesn't show up properly
+     - SOLUTION: use lodash/debounce to make most recent call the active one and remove previous ones. Essentially delay the execution of the function provided. 
  - [ ] store user data in external db
     - [ ] login
        - [ ] username
