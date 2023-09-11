@@ -33,42 +33,6 @@ export const FormFillup: React.FC<Props> = (props) => {
   ]);
   const baseUrl = "http://localhost:3000";
 
-  const debounceHandleSubmit = debounce(async (e: React.MouseEvent) => {
-    e.preventDefault();
-
-    const reqParams = getResponsibility();
-    setText([
-      "Loading....................................................................................................",
-    ]);
-
-    if (
-      reqParams === null ||
-      reqParams === undefined ||
-      reqParams[0][0] == ""
-    ) {
-      setText(["Enter some experiences please."]);
-      return;
-    }
-
-    try {
-      const response = await axios.get(`${baseUrl}/generate`, {
-        params: {
-          experienceArray: reqParams[0],
-        },
-      });
-      const data = response.data;
-      console.log(data);
-      const responseText: string = data.generations[0].text;
-      console.log(responseText);
-      setText([responseText]);
-    } catch (error) {
-      console.log(error);
-      setText([
-        "Unable to get suggestions, please try again after some time. Thank you :).",
-      ]);
-    }
-  }, 3000);
-
   const debounceHandleSubmitMuliple = debounce(async (e: React.MouseEvent) => {
     e.preventDefault();
 
@@ -102,9 +66,10 @@ export const FormFillup: React.FC<Props> = (props) => {
     });
 
     Promise.all(requests).then((suggestions) => {
+      console.log(suggestions);
       setText(suggestions);
     });
-  });
+  }, 2500);
 
   const getResponsibility: () => string[][] | null = () => {
     const obj = { ...props.experienceData };
@@ -232,7 +197,7 @@ export const FormFillup: React.FC<Props> = (props) => {
             type="submit"
             style={{ margin: "0.25rem" }}
             onClick={(e) => {
-              debounceHandleSubmit(e);
+              debounceHandleSubmitMuliple(e);
             }}
           >
             Generate suggestions
@@ -240,7 +205,7 @@ export const FormFillup: React.FC<Props> = (props) => {
           <Button
             type="button"
             style={{ margin: "0.25rem" }}
-            onClick={(e) => debounceHandleSubmitMuliple(e)}
+            onClick={getResponsibility}
           >
             Download
           </Button>

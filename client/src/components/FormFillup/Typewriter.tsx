@@ -6,6 +6,7 @@ interface Props {
 }
 
 export const Typewriter = ({ text, delay }: Props) => {
+
   const [currentText, setCurrent] = useState("");
   const [currentIndex, setCurrentIndex] = useState(0);
   const [itemIndex, setItemIndex] = useState(0);
