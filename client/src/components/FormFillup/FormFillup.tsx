@@ -36,6 +36,7 @@ export const FormFillup: React.FC<Props> = (props) => {
   const debounceHandleSubmitMuliple = debounce(async (e: React.MouseEvent) => {
     e.preventDefault();
 
+    console.log("clicked");
     const reqParams = getResponsibility();
     setText([
       "Loading....................................................................................................",

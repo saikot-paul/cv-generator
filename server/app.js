@@ -17,7 +17,7 @@ app.get('/generate', async (req, res) => {
   const experienceArray = req.query.experienceArray || []
   const desiredPostion = req.query.desiredPostion
   const exp = experienceArray.map( (element) => `- ${element}`).join('\n')
-  const primer = 'Transform each bullet point in the experience section wrapped in """ """" below to fit the STAR (Situation, Task, Action, Result) format. Each transformed bullet point should be a full complete sentence embodying the essence of the STAR format. For each bullet point in the original experience there should be one revised bullet point in the response. Return only the revised version.'
+  const primer = 'Transform each bullet point in the experience section wrapped in """ """" below to fit the STAR (Situation, Task, Action, Result) format. Each transformed bullet point should be a full complete sentence embodying the essence of the STAR . Return 3 revised bullet points from the experience. Return only the revised version.'
   const prompt = `${primer} \n\n"""\n\n${exp}\n\n"""`
   
   console.log(prompt)

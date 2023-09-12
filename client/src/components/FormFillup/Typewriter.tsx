@@ -8,41 +8,30 @@ interface Props {
 export const Typewriter = ({ text, delay }: Props) => {
 
   const [currentText, setCurrent] = useState("");
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [itemIndex, setItemIndex] = useState(0);
+  const [arrayIndex, setarrayIndex] = useState(0);
+  const [stringIndex, setstringIndex] = useState(0);
 
   useEffect(() => {
     setCurrent("");
-    setCurrentIndex(0);
+    setarrayIndex(0);
+    setstringIndex(0);
   }, [text]);
 
   useEffect(() => {
-    if (Array.isArray(text)) {
-      if (currentIndex < text.length) {
-        const timeout = setTimeout(() => {
-          if (itemIndex < text[currentIndex].length) {
-            setCurrent((prevText) => prevText + text[currentIndex][itemIndex]);
-            setItemIndex((prev) => prev + 1);
-          } else {
-            setCurrent((prev) => prev + "\n");
-            setCurrentIndex((prev) => prev + 1);
-            setItemIndex(0);
-          }
-        }, delay);
+    if (arrayIndex < text.length) {
+      const timeout = setTimeout(() => {
+        if (stringIndex < text[arrayIndex].length) {
+          setCurrent((prevText) => prevText + text[arrayIndex][stringIndex]);
+          setstringIndex((prev) => prev + 1);
+        } else {
+          setarrayIndex((prev) => prev + 1);
+          setstringIndex(0);
+        }
+      }, delay);
 
-        return () => clearTimeout(timeout);
-      }
-    } else {
-      if (currentIndex < text.length) {
-        const timeout = setTimeout(() => {
-          setCurrent((prevText) => prevText + text[currentIndex]);
-          setCurrentIndex((prev) => prev + 1);
-        }, delay);
-
-        return () => clearTimeout(timeout);
-      }
+      return () => clearTimeout(timeout);
     }
-  }, [currentIndex, delay, itemIndex, text]);
+  }, [arrayIndex, delay, stringIndex, text]);
 
   return <div style={{ whiteSpace: "pre-line" }}>{currentText}</div>;
 };

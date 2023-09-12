@@ -13,6 +13,7 @@ dist-ssr
 ./server/.config
 *.local
 */config.json
+exp.txt
 
 # Editor directories and files
 .vscode/*
