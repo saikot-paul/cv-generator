@@ -56,5 +56,4 @@ This web app, built with React, React Bootstrap, TypeScript, and CSS, empowers u
 
 <video width="320" height="240" controls>
   <source src="https://www.youtube.com/watch?v=biRI_aGhebs&ab_channel=SaikotPaul" type="video/mp4">
-  Your browser does not support the video tag.
 </video>
