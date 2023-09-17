@@ -54,4 +54,6 @@ This web app, built with React, React Bootstrap, TypeScript, and CSS, empowers u
             - Name, etc
          - rest of the parts will follow the same patterns
 
-![Demo of the project](https://youtu.be/biRI_aGhebs)
+<a href="https://youtu.be/biRI_aGhebs" target="_blank">
+ <img src="http://img.youtube.com/vi/nTQUwghvy5Q/mqdefault.jpg" alt="Watch the video" width="240" height="180" border="10" />
+</a>
