@@ -52,9 +52,7 @@ This web app, built with React, React Bootstrap, TypeScript, and CSS, empowers u
          - Contact
             - Primary key : username + hash or some auth
             - Name, etc
-         - rest of the parts will follow the same pattern      
+         - rest of the parts will follow the same patterns
 
-Here's what the front end currently looks like :) 
-<img width="808" alt="image" src="https://github.com/saikot-paul/cv-generator/assets/79386282/4d65dd24-5dd5-4ad8-99be-83c52bbf67ac">
-
-
+Here's a little preview. 
+![Demo Video][https://youtu.be/biRI_aGhebs]
