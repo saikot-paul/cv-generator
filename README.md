@@ -55,4 +55,4 @@ This web app, built with React, React Bootstrap, TypeScript, and CSS, empowers u
          - rest of the parts will follow the same patterns
 
 Here's a little preview. 
-[![Demo Video](https://youtu.be/biRI_aGhebs)]
+[Demo Video](https://youtu.be/biRI_aGhebs)
