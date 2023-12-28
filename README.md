@@ -1,57 +1,36 @@
-This web app, built with React, React Bootstrap, TypeScript, and CSS, empowers users to create polished resumes. Skillfully integrating controlled forms, dynamic components, and responsive design. I wanted to create an engaging and user-centric interfaces that seamlessly manage and present personalized data. It's still not finished yet. but the goal is to use AI to provide suggestions on responsibilities to format it better and fit the roles that they are applying for. 
+# Resume Builder Web Application
 
-- Current Tasks 
-   - [ ] create class to create form groups:
-      - [x] text
-      - [x] date
-      - [x] url
-  - [x] create components that utilize the form creation class:
-      - [x] contact 
-      - [x] education
-      - [x] experience
-      - [x] projects
-      - [x] website
-  - [ ] create validation functions for all above
-     - [x] text
-     - [x] url
-     - [x] email 
-     - [ ] date - have to cross reference between the past and the present 
-  - [ ] create radio box for present: Education. Experience, Project
-  - [x] create function that allows for duplicates of itself (projects, education, experience) - each component is now reusable instead of a function
-     - Thinking of creating useState array for each of the additional entries (ex key : "educationData", value : [ key : "experience_0", value : [{key: key, value: value}, etc], experience_2: [{key: key, value: value}, etc]]
-     - [x] create buttons for the addition/deletion
-     - [x] create useState for each comp
-     - [x] on render, map out the useState correctly such that each comp is given the correct itemKey 
-     - [x] in formClass make sure that if itemKey doesn't exist then to push the itemKey
-     - [x] ensure that add/remove keys work properly 
-  - ~~[x] create temporary boilerplate for resume render~~
-  - [x] reformat resume render to fit react-pdf (good thing is that it automatically re-renders anytime there is a state change) 
-  - [ ] find way to dynamically store user data
-     - [x] propagate those changes into the main App.tsx
-     - [ ] use the formData and render the resume
-  - ~~[x] use user data to provide suggestion API (I want to send this user data to cohere api and provide suggestions to the user)~~
-     - [x] get user data
-     - [x] send user data to cohere api with prompt
-     - [x] receive the results
-     - [x] format it
-     - [x] render it
- - ~~[x] fix button issue:~~
-     - whenever pressed too many times the card body component glitches and text doesn't show up properly
-     - SOLUTION: use lodash/debounce to make most recent call the active one and remove previous ones. Essentially delay the execution of the function provided. 
- - [ ] store user data in external db
-    - [ ] login
-       - [ ] username
-       - [ ] password
-       - [ ] authorization
-    - [ ] store information in the db
-    - Schema:
-       - Tables:
-         - User
-            - Username
-            - Password
-         - Contact
-            - Primary key : username + hash or some auth
-            - Name, etc
-         - rest of the parts will follow the same patterns
+## Overview
+I am developing a web application aimed at creating polished resumes, leveraging React, React Bootstrap, TypeScript, and CSS. My focus is on crafting a user-centric interface with controlled forms, dynamic components, and responsive design. Currently in development, the goal is to integrate AI, using the Cohere API, to suggest role-specific responsibilities and optimize resume formatting for specific job applications.
 
-Link to demo: https://www.youtube.com/watch?v=biRI_aGhebs&ab_channel=SaikotPaul
+## Key Implementation Details
+### Form Groups
+- Developed a class to create form groups for text, date, and URL inputs, utilized across components like contact, education, experience, and projects.
+
+### Validation Functions
+- Implementing validation functions for text, URL, and email inputs, with ongoing development for date validation.
+
+### Dynamic Components
+- The application includes reusable components for education, experience, and projects, managed using a `useState` array approach.
+
+### Resume Rendering
+- Integrated react-pdf for resume rendering, ensuring automatic updates with state changes.
+
+### Data Storage and User Interaction
+- Developing a method to dynamically store user data and reflect changes in the main App.tsx.
+- Future plans include user data storage in an external database with authentication and a structured schema.
+
+## Technical Techniques
+- Resolved button-related issues using lodash/debounce for smoother user interactions.
+- Utilizing React's useState and mapping functionalities to dynamically render and manage form components.
+
+## AI-Powered Experience Bullet Point Generation
+### Challenges
+1. **Initial Large Prompt Approach**: Initially tried using a single, extensive prompt for bullet point generation.
+   
+2. **STAR Component Splitting**: Experimented with breaking down prompts into STAR components for structured AI responses.
+
+3. **Prompt with Examples**: Currently using prompts with examples, achieving around a 50% success rate.
+
+## Future Plans
+Working towards creating resumes based on user's current information and tailored to specific job descriptions. This aims to enhance the personalization aspect of the resume creation process, making the application a valuable tool for job seekers.
