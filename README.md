@@ -34,3 +34,4 @@ I am developing a web application aimed at creating polished resumes, leveraging
 
 ## Future Plans
 Working towards creating resumes based on user's current information and tailored to specific job descriptions. This aims to enhance the personalization aspect of the resume creation process, making the application a valuable tool for job seekers.
+State management with Redux/Zustand.
